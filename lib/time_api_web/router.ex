@@ -3,10 +3,14 @@ defmodule TodolistWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+
   end
 
   scope "/api", TodolistWeb do
     pipe_through :api
+    resources "/clocks", ClockController, except: [:new, :edit]
+    resources "/workingtimes", WorkingTimeController, except: [:new, :edit]
+    resources "/users", UserController, except: [:new, :edit]
   end
 
   # Enables LiveDashboard only for development

@@ -4,7 +4,7 @@ defmodule Todolist.Repo.Migrations.CreateClocks do
   def change do
     create table(:clocks) do
       add :time, :naive_datetime
-      add :status, :boolean, default: false, null: false
+      add :status, :boolean, default: true
       add :user, references(:users, on_delete: :nothing)
 
       timestamps()
