@@ -315,8 +315,8 @@ defmodule TimeManager.Store do
     WorkingTime.changeset(working_time, attrs)
   end
 
-  def get_workingtimes_by_user_id(user_id) do
-    from(w in WorkingTime, where: w.user_id == ^user_id)
+  def get_workingtimes_by_user_id_and_working_time_id(user_id, working_time_id) do
+    from(w in WorkingTime, where: w.user_id == ^user_id and w.id == ^working_time_id)
     |> Repo.all()
   end
 
