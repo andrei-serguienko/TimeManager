@@ -1,6 +1,5 @@
 defmodule TimeManagerWeb.ClockController do
   use TimeManagerWeb, :controller
-
   alias TimeManager.Store
   alias TimeManager.Store.Clock
 
@@ -14,9 +13,8 @@ defmodule TimeManagerWeb.ClockController do
   def create(conn, %{"user_id" => user_id, "clock" => clock_params}) do
     with {:ok, %Clock{} = clock} <- Store.create_clock(user_id, clock_params) do
       if(clock_params["status"] == false) do
-        clockIn = Store.get_clockIn(user_id)
-       # Store.create_clock(user_id, {clockIn.start, clock_params.time})
-       # Store.update_working_time(user_id,{clockIn.start,clock_params.end})
+        workingtime = Store.get_clockIn(user_id)
+        Store.update_working_time(workingtime,[start: workingtime.start, end: clock_params.time])
       end
       conn
       |> put_status(:created)
