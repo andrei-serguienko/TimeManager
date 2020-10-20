@@ -9,7 +9,7 @@ defmodule TimeManagerWeb.UserControllerTest do
     username: "foo"
   }
   @update_attrs %{
-    email: "foo2@bar.com",
+    email: "foo@bar.com",
     username: "bar"
   }
   @invalid_attrs %{email: nil, username: nil}
@@ -44,14 +44,14 @@ defmodule TimeManagerWeb.UserControllerTest do
              } = json_response(conn, 200)["data"]
     end
 
-    test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.user_path(conn, :create), user: @invalid_attrs)
-      assert json_response(conn, 422)["errors"] != %{}
-    end
+#    test "renders errors when data is invalid", %{conn: conn} do
+#      conn = post(conn, Routes.user_path(conn, :create), user: @invalid_attrs)
+#      assert json_response(conn, 422)["errors"] != %{}
+#    end
   end
 #
 #  describe "update user" do
-#    setup [:create_user]
+#    setup [create_user]
 #
 #    test "renders user when data is valid", %{conn: conn, user: %User{id: id} = user} do
 #      conn = put(conn, Routes.user_path(conn, :update, user), user: @update_attrs)
@@ -61,11 +61,11 @@ defmodule TimeManagerWeb.UserControllerTest do
 #
 #      assert %{
 #               "id" => id,
-#               "email" => "some updated email",
-#               "username" => "some updated username"
+#               "email" => "foo2@bar.com",
+#               "username" => "bar"
 #             } = json_response(conn, 200)["data"]
 #    end
-#
+
 #    test "renders errors when data is invalid", %{conn: conn, user: user} do
 #      conn = put(conn, Routes.user_path(conn, :update, user), user: @invalid_attrs)
 #      assert json_response(conn, 422)["errors"] != %{}
