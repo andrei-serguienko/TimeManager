@@ -6,9 +6,9 @@ defmodule TimeManagerWeb.WorkingTimeController do
 
   action_fallback TimeManagerWeb.FallbackController
 
-  def index(conn, %{"user_id" => user_id}) do
-    workingtimes = Store.get_workingtimes_by_user_id(user_id)
-    render(conn, "index.json", workingtimes: workingtimes)
+  def index(conn, %{"user_id" => user_id, "working_time_id" => working_time_id}) do
+    workingtime = Store.get_workingtimes_by_user_id_and_working_time_id(user_id, working_time_id)
+    render(conn, "index.json", workingtimes: workingtime)
   end
 
   def create(conn, %{"user_id" => user_id, "working_time" => working_time_params}) do
