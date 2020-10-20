@@ -11,8 +11,8 @@ defmodule TodolistWeb.WorkingTimeController do
     render(conn, "index.json", workingtimes: workingtimes)
   end
 
-  def create(conn, %{"working_time" => working_time_params}) do
-    with {:ok, %WorkingTime{} = working_time} <- Store.create_working_time(working_time_params) do
+  def create(conn, %{"id" => id, "working_time" => working_time_params}) do
+    with {:ok, %WorkingTime{} = working_time} <- Store.create_working_time(id, working_time_params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.working_time_path(conn, :show, working_time))

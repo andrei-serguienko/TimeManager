@@ -37,6 +37,21 @@ defmodule Todolist.Store do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  def get_users_by_username!(username) do
+    from(u in User, where: u.username == ^username)
+    |> Repo.all()
+  end
+
+  def get_users_by_email!(email) do
+    from(u in User, where: u.email == ^email)
+    |> Repo.all()
+  end
+
+  def get_users_by_username_and_email!(username, email) do
+    from(u in User, where: u.username == ^username and u.email == ^email)
+    |> Repo.all()
+  end
+
   @doc """
   Creates a user.
 
@@ -241,7 +256,8 @@ defmodule Todolist.Store do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_working_time(attrs \\ %{}) do
+  def create_working_time(id, attrs \\ %{}) do
+    _user = get_user!(id)
     %WorkingTime{}
     |> WorkingTime.changeset(attrs)
     |> Repo.insert()

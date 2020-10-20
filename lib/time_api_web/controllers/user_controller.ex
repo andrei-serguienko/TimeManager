@@ -6,6 +6,21 @@ defmodule TodolistWeb.UserController do
 
   action_fallback TodolistWeb.FallbackController
 
+  def index(conn, %{"username" => username, "email" => email} = _params) do
+    users = Store.get_users_by_username_and_email!(username, email)
+    render(conn, "index.json", users: users)
+  end
+
+  def index(conn, %{"email" => email} = _params) do
+    users = Store.get_users_by_email!(email)
+    render(conn, "index.json", users: users)
+  end
+
+  def index(conn, %{"username" => username} = _params) do
+    users = Store.get_users_by_username!(username)
+    render(conn, "index.json", users: users)
+  end
+
   def index(conn, _params) do
     users = Store.list_users()
     render(conn, "index.json", users: users)

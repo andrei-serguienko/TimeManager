@@ -5,6 +5,8 @@ defmodule Todolist.Store.User do
   schema "users" do
     field :email, :string
     field :username, :string
+    has_many :workingtimes, Todolist.Store.Workingtimes, on_delete: :delete_all
+    has_many :clocks, Todolist.Store.Clocks, on_delete: :delete_all
 
     timestamps()
   end
