@@ -1,10 +1,10 @@
-defmodule TodolistWeb.UserController do
-  use TodolistWeb, :controller
+defmodule TimeManagerWeb.UserController do
+  use TimeManagerWeb, :controller
 
-  alias Todolist.Store
-  alias Todolist.Store.User
+  alias TimeManager.Store
+  alias TimeManager.Store.User
 
-  action_fallback TodolistWeb.FallbackController
+  action_fallback TimeManagerWeb.FallbackController
 
   def index(conn, %{"username" => username, "email" => email} = _params) do
     users = Store.get_users_by_username_and_email!(username, email)

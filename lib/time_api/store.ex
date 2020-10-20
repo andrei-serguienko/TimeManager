@@ -1,12 +1,12 @@
-defmodule Todolist.Store do
+defmodule TimeManager.Store do
   @moduledoc """
   The Store context.
   """
 
   import Ecto.Query, warn: false
-  alias Todolist.Repo
+  alias TimeManager.Repo
 
-  alias Todolist.Store.User
+  alias TimeManager.Store.User
 
   @doc """
   Returns the list of users.
@@ -117,7 +117,7 @@ defmodule Todolist.Store do
     User.changeset(user, attrs)
   end
 
-  alias Todolist.Store.Clock
+  alias TimeManager.Store.Clock
 
   @doc """
   Returns the list of clocks.
@@ -216,7 +216,7 @@ defmodule Todolist.Store do
     Clock.changeset(clock, attrs)
   end
 
-  alias Todolist.Store.WorkingTime
+  alias TimeManager.Store.WorkingTime
 
   @doc """
   Returns the list of workingtimes.

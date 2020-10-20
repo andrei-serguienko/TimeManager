@@ -1,12 +1,12 @@
-defmodule TodolistWeb.Router do
-  use TodolistWeb, :router
+defmodule TimeManagerWeb.Router do
+  use TimeManagerWeb, :router
 
   pipeline :api do
     plug :accepts, ["json"]
 
   end
 
-  scope "/api", TodolistWeb do
+  scope "/api", TimeManagerWeb do
     pipe_through :api
     post "/clocks/:user_id", ClockController, :create
     post "/workingtimes/:user_id", WorkingTimeController, :create
@@ -27,7 +27,7 @@ defmodule TodolistWeb.Router do
 
     scope "/" do
       pipe_through [:fetch_session, :protect_from_forgery]
-      live_dashboard "/dashboard", metrics: TodolistWeb.Telemetry
+      live_dashboard "/dashboard", metrics: TimeManagerWeb.Telemetry
     end
   end
 end

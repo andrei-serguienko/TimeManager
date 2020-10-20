@@ -1,6 +1,6 @@
-defmodule TodolistWeb.ClockView do
-  use TodolistWeb, :view
-  alias TodolistWeb.ClockView
+defmodule TimeManagerWeb.ClockView do
+  use TimeManagerWeb, :view
+  alias TimeManagerWeb.ClockView
 
   def render("index.json", %{clocks: clocks}) do
     %{data: render_many(clocks, ClockView, "clock.json")}

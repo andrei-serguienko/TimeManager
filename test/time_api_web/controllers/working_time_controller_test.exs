@@ -1,8 +1,8 @@
-defmodule TodolistWeb.WorkingTimeControllerTest do
-  use TodolistWeb.ConnCase
+defmodule TimeManagerWeb.WorkingTimeControllerTest do
+  use TimeManagerWeb.ConnCase
 
-  alias Todolist.Store
-  alias Todolist.Store.WorkingTime
+  alias TimeManager.Store
+  alias TimeManager.Store.WorkingTime
 
   @create_attrs %{
     end: ~N[2010-04-17 14:00:00],

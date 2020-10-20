@@ -1,8 +1,8 @@
-defmodule TodolistWeb.UserControllerTest do
-  use TodolistWeb.ConnCase
+defmodule TimeManagerWeb.UserControllerTest do
+  use TimeManagerWeb.ConnCase
 
-  alias Todolist.Store
-  alias Todolist.Store.User
+  alias TimeManager.Store
+  alias TimeManager.Store.User
 
   @create_attrs %{
     email: "some email",

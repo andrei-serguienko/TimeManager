@@ -1,11 +1,11 @@
-defmodule TodolistWeb.ChangesetView do
-  use TodolistWeb, :view
+defmodule TimeManagerWeb.ChangesetView do
+  use TimeManagerWeb, :view
 
   @doc """
   Traverses and translates changeset errors.
 
   See `Ecto.Changeset.traverse_errors/2` and
-  `TodolistWeb.ErrorHelpers.translate_error/1` for more details.
+  `TimeManagerWeb.ErrorHelpers.translate_error/1` for more details.
   """
   def translate_errors(changeset) do
     Ecto.Changeset.traverse_errors(changeset, &translate_error/1)

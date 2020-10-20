@@ -1,4 +1,4 @@
-defmodule TodolistWeb.Endpoint do
+defmodule TimeManagerWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :time_api
 
   # The session will be stored in the cookie and signed,
@@ -10,7 +10,7 @@ defmodule TodolistWeb.Endpoint do
     signing_salt: "99U+nhmW"
   ]
 
-  socket "/socket", TodolistWeb.UserSocket,
+  socket "/socket", TimeManagerWeb.UserSocket,
     websocket: true,
     longpoll: false
 
@@ -48,5 +48,5 @@ defmodule TodolistWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug TodolistWeb.Router
+  plug TimeManagerWeb.Router
 end

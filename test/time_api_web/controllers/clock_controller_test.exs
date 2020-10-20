@@ -1,8 +1,8 @@
-defmodule TodolistWeb.ClockControllerTest do
-  use TodolistWeb.ConnCase
+defmodule TimeManagerWeb.ClockControllerTest do
+  use TimeManagerWeb.ConnCase
 
-  alias Todolist.Store
-  alias Todolist.Store.Clock
+  alias TimeManager.Store
+  alias TimeManager.Store.Clock
 
   @create_attrs %{
     status: true,

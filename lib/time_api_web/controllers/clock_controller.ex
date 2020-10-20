@@ -1,10 +1,10 @@
-defmodule TodolistWeb.ClockController do
-  use TodolistWeb, :controller
+defmodule TimeManagerWeb.ClockController do
+  use TimeManagerWeb, :controller
 
-  alias Todolist.Store
-  alias Todolist.Store.Clock
+  alias TimeManager.Store
+  alias TimeManager.Store.Clock
 
-  action_fallback TodolistWeb.FallbackController
+  action_fallback TimeManagerWeb.FallbackController
 
   def index(conn, %{"user_id" => user_id}) do
     clocks = Store.get_clocks_by_user_id(user_id)

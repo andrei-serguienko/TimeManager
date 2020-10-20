@@ -1,4 +1,4 @@
-defmodule Todolist.Repo.Migrations.CreateWorkingtimes do
+defmodule TimeManager.Repo.Migrations.CreateWorkingtimes do
   use Ecto.Migration
 
   def change do

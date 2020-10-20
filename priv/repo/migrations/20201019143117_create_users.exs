@@ -1,4 +1,4 @@
-defmodule Todolist.Repo.Migrations.CreateUsers do
+defmodule TimeManager.Repo.Migrations.CreateUsers do
   use Ecto.Migration
 
   def change do

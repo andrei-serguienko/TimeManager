@@ -1,4 +1,4 @@
-# Todolist
+# TimeManager
 
 To start your Phoenix server:
 

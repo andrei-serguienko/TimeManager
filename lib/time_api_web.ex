@@ -1,12 +1,12 @@
-defmodule TodolistWeb do
+defmodule TimeManagerWeb do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, views, channels and so on.
 
   This can be used in your application as:
 
-      use TodolistWeb, :controller
-      use TodolistWeb, :view
+      use TimeManagerWeb, :controller
+      use TimeManagerWeb, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -19,11 +19,11 @@ defmodule TodolistWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: TodolistWeb
+      use Phoenix.Controller, namespace: TimeManagerWeb
 
       import Plug.Conn
-      import TodolistWeb.Gettext
-      alias TodolistWeb.Router.Helpers, as: Routes
+      import TimeManagerWeb.Gettext
+      alias TimeManagerWeb.Router.Helpers, as: Routes
     end
   end
 
@@ -31,7 +31,7 @@ defmodule TodolistWeb do
     quote do
       use Phoenix.View,
         root: "lib/time_api_web/templates",
-        namespace: TodolistWeb
+        namespace: TimeManagerWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller,
@@ -54,7 +54,7 @@ defmodule TodolistWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import TodolistWeb.Gettext
+      import TimeManagerWeb.Gettext
     end
   end
 
@@ -63,9 +63,9 @@ defmodule TodolistWeb do
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
 
-      import TodolistWeb.ErrorHelpers
-      import TodolistWeb.Gettext
-      alias TodolistWeb.Router.Helpers, as: Routes
+      import TimeManagerWeb.ErrorHelpers
+      import TimeManagerWeb.Gettext
+      alias TimeManagerWeb.Router.Helpers, as: Routes
     end
   end
 

@@ -1,4 +1,4 @@
-defmodule TodolistWeb.ErrorHelpers do
+defmodule TimeManagerWeb.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -25,9 +25,9 @@ defmodule TodolistWeb.ErrorHelpers do
     # should be written to the errors.po file. The :count option is
     # set by Ecto and indicates we should also apply plural rules.
     if count = opts[:count] do
-      Gettext.dngettext(TodolistWeb.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(TimeManagerWeb.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(TodolistWeb.Gettext, "errors", msg, opts)
+      Gettext.dgettext(TimeManagerWeb.Gettext, "errors", msg, opts)
     end
   end
 end

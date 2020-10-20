@@ -1,4 +1,4 @@
-defmodule Todolist.Application do
+defmodule TimeManager.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -8,27 +8,27 @@ defmodule Todolist.Application do
   def start(_type, _args) do
     children = [
       # Start the Ecto repository
-      Todolist.Repo,
+      TimeManager.Repo,
       # Start the Telemetry supervisor
-      TodolistWeb.Telemetry,
+      TimeManagerWeb.Telemetry,
       # Start the PubSub system
-      {Phoenix.PubSub, name: Todolist.PubSub},
+      {Phoenix.PubSub, name: TimeManager.PubSub},
       # Start the Endpoint (http/https)
-      TodolistWeb.Endpoint
-      # Start a worker by calling: Todolist.Worker.start_link(arg)
-      # {Todolist.Worker, arg}
+      TimeManagerWeb.Endpoint
+      # Start a worker by calling: TimeManager.Worker.start_link(arg)
+      # {TimeManager.Worker, arg}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Todolist.Supervisor]
+    opts = [strategy: :one_for_one, name: TimeManager.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
   def config_change(changed, _new, removed) do
-    TodolistWeb.Endpoint.config_change(changed, removed)
+    TimeManagerWeb.Endpoint.config_change(changed, removed)
     :ok
   end
 end

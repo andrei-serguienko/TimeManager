@@ -1,10 +1,10 @@
-defmodule TodolistWeb.WorkingTimeController do
-  use TodolistWeb, :controller
+defmodule TimeManagerWeb.WorkingTimeController do
+  use TimeManagerWeb, :controller
 
-  alias Todolist.Store
-  alias Todolist.Store.WorkingTime
+  alias TimeManager.Store
+  alias TimeManager.Store.WorkingTime
 
-  action_fallback TodolistWeb.FallbackController
+  action_fallback TimeManagerWeb.FallbackController
 
   def index(conn, %{"user_id" => user_id}) do
     workingtimes = Store.get_workingtimes_by_user_id(user_id)

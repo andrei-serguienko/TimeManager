@@ -1,10 +1,10 @@
-defmodule Todolist.StoreTest do
-  use Todolist.DataCase
+defmodule TimeManager.StoreTest do
+  use TimeManager.DataCase
 
-  alias Todolist.Store
+  alias TimeManager.Store
 
   describe "users" do
-    alias Todolist.Store.User
+    alias TimeManager.Store.User
 
     @valid_attrs %{email: "some email", username: "some username"}
     @update_attrs %{email: "some updated email", username: "some updated username"}
@@ -65,7 +65,7 @@ defmodule Todolist.StoreTest do
   end
 
   describe "clocks" do
-    alias Todolist.Store.Clock
+    alias TimeManager.Store.Clock
 
     @valid_attrs %{status: true, time: ~N[2010-04-17 14:00:00]}
     @update_attrs %{status: false, time: ~N[2011-05-18 15:01:01]}
@@ -126,7 +126,7 @@ defmodule Todolist.StoreTest do
   end
 
   describe "workingtimes" do
-    alias Todolist.Store.WorkingTime
+    alias TimeManager.Store.WorkingTime
 
     @valid_attrs %{end: ~N[2010-04-17 14:00:00], start: ~N[2010-04-17 14:00:00]}
     @update_attrs %{end: ~N[2011-05-18 15:01:01], start: ~N[2011-05-18 15:01:01]}

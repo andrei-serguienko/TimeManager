@@ -1,4 +1,4 @@
-defmodule Todolist.MixProject do
+defmodule TimeManager.MixProject do
   use Mix.Project
 
   def project do
@@ -19,7 +19,7 @@ defmodule Todolist.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Todolist.Application, []},
+      mod: {TimeManager.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end

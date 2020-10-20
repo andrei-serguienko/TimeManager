@@ -1,5 +1,5 @@
-defmodule TodolistWeb.ErrorView do
-  use TodolistWeb, :view
+defmodule TimeManagerWeb.ErrorView do
+  use TimeManagerWeb, :view
 
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.
