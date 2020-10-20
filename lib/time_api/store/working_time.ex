@@ -5,8 +5,8 @@ defmodule Todolist.Store.WorkingTime do
   schema "workingtimes" do
     field :end, :naive_datetime
     field :start, :naive_datetime
-
     belongs_to :user , Todolist.Store.User
+
     timestamps()
   end
 
