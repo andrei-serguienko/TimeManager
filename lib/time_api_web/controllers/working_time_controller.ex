@@ -11,6 +11,11 @@ defmodule TimeManagerWeb.WorkingTimeController do
     render(conn, "index.json", workingtimes: workingtime)
   end
 
+  def index(conn, %{"userID" => userID, "start" => start, "end" => endVal}) do
+    workingtime = Store.get_workingtimes_by_start_and_end(userID, start, endVal)
+    render(conn, "index.json", workingtimes: workingtime)
+  end
+
   def create(conn, %{"user_id" => user_id, "working_time" => working_time_params}) do
     with {:ok, %WorkingTime{} = working_time} <- Store.create_working_time(user_id, working_time_params) do
       conn
