@@ -16,6 +16,16 @@ defmodule TimeManagerWeb.WorkingTimeController do
     render(conn, "index.json", workingtimes: workingtime)
   end
 
+  def index(conn, %{"userID" => userID, "start" => start}) do
+    workingtime = Store.get_workingtimes_by_start(userID, start)
+    render(conn, "index.json", workingtimes: workingtime)
+  end
+
+  def index(conn, %{"userID" => userID, "end" => endVal}) do
+    workingtime = Store.get_workingtimes_by_end(userID, endVal)
+    render(conn, "index.json", workingtimes: workingtime)
+  end
+
   def index(conn, %{"userID" => userID}) do
     workingtime = Store.get_workingtimes_by_user_id(userID)
     render(conn, "index.json", workingtimes: workingtime)
