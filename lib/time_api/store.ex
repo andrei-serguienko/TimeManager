@@ -329,4 +329,9 @@ defmodule TimeManager.Store do
     from(c in Clock, where: c.user_id == ^user_id)
     |> Repo.all()
   end
+
+  def get_workingtimes_by_user_id(user_id) do
+    from(c in WorkingTime, where: c.user_id == ^user_id)
+    |> Repo.all()
+  end
 end
