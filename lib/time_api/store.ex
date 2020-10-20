@@ -160,8 +160,11 @@ defmodule Todolist.Store do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_clock(attrs \\ %{}) do
-    %Clock{}
+
+  def create_clock(user_id, attrs \\ %{}) do
+    user = get_user!(user_id)
+    user
+    |> Ecto.build_assoc(:clocks)
     |> Clock.changeset(attrs)
     |> Repo.insert()
   end
@@ -264,6 +267,7 @@ defmodule Todolist.Store do
     |> Repo.insert()
   end
 
+
   @doc """
   Updates a working_time.
 
@@ -313,6 +317,11 @@ defmodule Todolist.Store do
 
   def get_workingtimes_by_user_id(user_id) do
     from(w in WorkingTime, where: w.user_id == ^user_id)
+    |> Repo.all()
+  end
+
+  def get_clocks_by_user_id(user_id) do
+    from(c in Clock, where: c.user_id == ^user_id)
     |> Repo.all()
   end
 end

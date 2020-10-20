@@ -6,16 +6,15 @@ defmodule TodolistWeb.ClockController do
 
   action_fallback TodolistWeb.FallbackController
 
-  def index(conn, _params) do
-    clocks = Store.list_clocks()
+  def index(conn, %{"user_id" => user_id}) do
+    clocks = Store.get_clocks_by_user_id(user_id)
     render(conn, "index.json", clocks: clocks)
   end
 
-  def create(conn, %{"clock" => clock_params}) do
-    with {:ok, %Clock{} = clock} <- Store.create_clock(clock_params) do
+  def create(conn, %{"user_id" => user_id, "clock" => clock_params}) do
+    with {:ok, %Clock{} = clock} <- Store.create_clock(user_id, clock_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.clock_path(conn, :show, clock))
       |> render("show.json", clock: clock)
     end
   end
