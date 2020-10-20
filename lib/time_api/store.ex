@@ -167,6 +167,7 @@ defmodule TimeManager.Store do
     |> Ecto.build_assoc(:clocks)
     |> Clock.changeset(attrs)
     |> Repo.insert()
+
   end
 
   @doc """
@@ -315,6 +316,11 @@ defmodule TimeManager.Store do
     WorkingTime.changeset(working_time, attrs)
   end
 
+  def get_clockIn(user_id) do
+    from(w in WorkingTime, where: w.user_id == ^user_id and w.end is NULL)
+    |> Repo.all()
+  end
+
   def get_workingtimes_by_user_id_and_working_time_id(user_id, working_time_id) do
     from(w in WorkingTime, where: w.user_id == ^user_id and w.id == ^working_time_id)
     |> Repo.all()
@@ -324,4 +330,5 @@ defmodule TimeManager.Store do
     from(c in Clock, where: c.user_id == ^user_id)
     |> Repo.all()
   end
+
 end

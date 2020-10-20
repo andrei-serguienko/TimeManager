@@ -13,6 +13,11 @@ defmodule TimeManagerWeb.ClockController do
 
   def create(conn, %{"user_id" => user_id, "clock" => clock_params}) do
     with {:ok, %Clock{} = clock} <- Store.create_clock(user_id, clock_params) do
+      if(clock_params["status"] == false) do
+        clockIn = Store.get_clockIn(user_id)
+        Store.create_clock(user_id, {clockIn.start, clock_params.time})
+       # Store.update_working_time(user_id,{clockIn.start,clock_params.end})
+      end
       conn
       |> put_status(:created)
       |> render("show.json", clock: clock)
