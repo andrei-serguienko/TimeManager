@@ -6,16 +6,15 @@ defmodule TodolistWeb.WorkingTimeController do
 
   action_fallback TodolistWeb.FallbackController
 
-  def index(conn, _params) do
-    workingtimes = Store.list_workingtimes()
+  def index(conn, %{"user_id" => user_id}) do
+    workingtimes = Store.get_workingtimes_by_user_id(user_id)
     render(conn, "index.json", workingtimes: workingtimes)
   end
 
-  def create(conn, %{"id" => id, "working_time" => working_time_params}) do
-    with {:ok, %WorkingTime{} = working_time} <- Store.create_working_time(id, working_time_params) do
+  def create(conn, %{"user_id" => user_id, "working_time" => working_time_params}) do
+    with {:ok, %WorkingTime{} = working_time} <- Store.create_working_time(user_id, working_time_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.working_time_path(conn, :show, working_time))
       |> render("show.json", working_time: working_time)
     end
   end

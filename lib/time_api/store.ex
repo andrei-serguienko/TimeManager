@@ -256,9 +256,10 @@ defmodule Todolist.Store do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_working_time(id, attrs \\ %{}) do
-    _user = get_user!(id)
-    %WorkingTime{}
+  def create_working_time(user_id, attrs \\ %{}) do
+    user = get_user!(user_id)
+    user
+    |> Ecto.build_assoc(:workingtimes)
     |> WorkingTime.changeset(attrs)
     |> Repo.insert()
   end
@@ -308,5 +309,10 @@ defmodule Todolist.Store do
   """
   def change_working_time(%WorkingTime{} = working_time, attrs \\ %{}) do
     WorkingTime.changeset(working_time, attrs)
+  end
+
+  def get_workingtimes_by_user_id(user_id) do
+    from(w in WorkingTime, where: w.user_id == ^user_id)
+    |> Repo.all()
   end
 end
