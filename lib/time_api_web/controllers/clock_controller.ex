@@ -15,7 +15,7 @@ defmodule TimeManagerWeb.ClockController do
     with {:ok, %Clock{} = clock} <- Store.create_clock(user_id, clock_params) do
       if(clock_params["status"] == false) do
         clockIn = Store.get_clockIn(user_id)
-        Store.create_clock(user_id, {clockIn.start, clock_params.time})
+       # Store.create_clock(user_id, {clockIn.start, clock_params.time})
        # Store.update_working_time(user_id,{clockIn.start,clock_params.end})
       end
       conn

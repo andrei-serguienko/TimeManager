@@ -317,7 +317,7 @@ defmodule TimeManager.Store do
   end
 
   def get_clockIn(user_id) do
-    from(w in WorkingTime, where: w.user_id == ^user_id and w.end is NULL)
+    from(w in WorkingTime, where: w.user_id == ^user_id and is_nil(w.end))
     |> Repo.all()
   end
 
