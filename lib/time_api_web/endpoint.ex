@@ -24,7 +24,8 @@ defmodule TimeManagerWeb.Endpoint do
     at: "/",
     from: :time_api,
     gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only: ~w(css fonts images js favicon.ico robots.txt),
+    headers: %{"Access-Control-Allow-Origin" => "*"}
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
@@ -49,4 +50,5 @@ defmodule TimeManagerWeb.Endpoint do
   plug Plug.Head
   plug Plug.Session, @session_options
   plug TimeManagerWeb.Router
+  plug CORSPlug
 end
