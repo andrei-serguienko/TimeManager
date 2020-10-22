@@ -55,4 +55,11 @@ defmodule TimeManagerWeb.UserController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def authentication(conn, %{"id" => id}) do
+    user = Store.get_user!(id)
+    if(user) do
+      send_resp(conn, :created, "")
+    end
+  end
 end

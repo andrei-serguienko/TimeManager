@@ -18,6 +18,8 @@ defmodule TimeManagerWeb.Router do
     get "/workingtimes/:userID/:workingtimeID", WorkingTimeController, :index
     get "/clocks/:user_id", ClockController, :index
     resources "/users", UserController, except: [:new, :edit]
+    options "/users/:id", UserController, :authentication
+    options "/users/", UserController, :authentication
   end
 
   # Enables LiveDashboard only for development
