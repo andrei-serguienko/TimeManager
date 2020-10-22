@@ -39,4 +39,10 @@ defmodule TimeManagerWeb.ClockController do
       send_resp(conn, :no_content, "")
     end
   end
+  def authentication(conn, %{"id" => id}) do
+    clock = Store.get_clock!(id)
+    if(clock) do
+      send_resp(conn, :created, "")
+    end
+  end
 end
