@@ -64,4 +64,11 @@ defmodule TimeManagerWeb.WorkingTimeController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def authentication(conn, %{"id" => id}) do
+    working_time = Store.get_working_time!(id)
+    if(working_time) do
+      send_resp(conn, :created, "")
+    end
+  end
 end
