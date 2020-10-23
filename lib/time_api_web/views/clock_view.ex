@@ -1,4 +1,4 @@
-defmodule TimeManagerWeb.ClockView do
+  defmodule TimeManagerWeb.ClockView do
   use TimeManagerWeb, :view
   alias TimeManagerWeb.ClockView
 
