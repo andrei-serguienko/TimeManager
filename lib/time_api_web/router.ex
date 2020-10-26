@@ -2,7 +2,6 @@ defmodule TimeManagerWeb.Router do
   use TimeManagerWeb, :router
 
   pipeline :api do
-    plug CORSPlug, origin: "*"
     plug :accepts, ["json"]
 
   end
