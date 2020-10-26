@@ -11,7 +11,7 @@ WORKDIR /api
 ENV MIX_ENV=prod
 ENV PORT=4000
 ENV DATABASE_URL=ecto://postgres:postgres@db/time_api_dev
-ENV SECRET_KEY_BASE=t8sxAm3YJK0ekRZO9vIfIMrm8vjz9OdEjs9v4pgp2wlz5sRbU8ZYcV9CqwSUyBqy
+ENV SECRET_KEY_BASE=K84GBcbBJNdFL194lWSgIgMYp9F2rW898m6wFLo2EHczjhPIA8dsDdrDSYwhWcdP
 
 RUN mix local.rebar --force
 RUN mix deps.get --only prod
