@@ -17,7 +17,7 @@ config :time_api,
          host: "evening-atoll-20623.herokuapp.com/",
          port: 443
        ],
-       force_ssl: [rewrite_on: [:x_forwarded_proto]],
+       force_ssl: [rewrite_on: [:x_forwarded_proto]]
 
 # Do not print debug messages in production
 config :logger, level: :info
