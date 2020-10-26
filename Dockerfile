@@ -18,4 +18,4 @@ RUN mix deps.get --only prod
 RUN mix compile
 RUN mix phx.digest
 # run phoenix in production on PORT 4000
-CMD mix ecto.setup && mix phx.server
+CMD mix local.hex --force && mix ecto.setup && mix phx.server
