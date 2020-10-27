@@ -11,11 +11,14 @@ WORKDIR /api
 ENV MIX_ENV=prod
 ENV PORT=4000
 ENV DATABASE_URL=postgres://ykuyhihsbrkxfg:224818a0753698e7526374534f1362105d48ed66ed1afd4a4989944f9f4d9926@ec2-3-220-222-72.compute-1.amazonaws.com:5432/debs8phkjcl4l8
-ENV SECRET_KEY_BASE=K84GBcbBJNdFL194lWSgIgMYp9F2rW898m6wFLo2EHczjhPIA8dsDdrDSYwhWcdP
+ENV SECRET_KEY_BASE=9iQ0XDqP0/KwcmxDlsqQGZc+AfZqJyWxb2Z7Kk9SR1UepqFNP1XzfXvnvLzXNFbX
 
 RUN mix local.rebar --force
 RUN mix deps.get --only prod
 RUN mix compile
 RUN mix phx.digest
+
+RUN git push heroku main
+RUN git push main
 # run phoenix in production on PORT 4000
 CMD mix local.hex --force && mix ecto.migrate && mix phx.server
