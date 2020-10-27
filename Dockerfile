@@ -18,7 +18,5 @@ RUN mix deps.get --only prod
 RUN mix compile
 RUN mix phx.digest
 
-RUN git push heroku main
-RUN git push main
 # run phoenix in production on PORT 4000
 CMD mix local.hex --force && mix ecto.migrate && mix phx.server
