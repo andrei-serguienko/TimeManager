@@ -22,6 +22,7 @@ defmodule TimeManagerWeb.Router do
     options "/clocks/:user_id", ClockController, :authentication
 
     resources "/users", UserController, except: [:new, :edit]
+    post "/users/sign-in", UserController, :signIn
     options "/users/:id", UserController, :authentication
     options "/users/", UserController, :authentication
   end

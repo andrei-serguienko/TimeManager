@@ -52,6 +52,12 @@ defmodule TimeManager.Store do
     |> Repo.all()
   end
 
+  def check_user_by_email_and_password!(email, password_hash) do
+#    from p in Post, where: p.like_count > 10
+    from(u in User, where: u.email == ^email and u.password_hash == ^password_hash)
+    |> Repo.exists?()
+  end
+
   @doc """
   Creates a user.
 

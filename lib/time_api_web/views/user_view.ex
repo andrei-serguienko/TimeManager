@@ -13,6 +13,9 @@ defmodule TimeManagerWeb.UserView do
   def render("user.json", %{user: user}) do
     %{id: user.id,
       username: user.username,
-      email: user.email}
+      email: user.email,
+      admin: user.admin,
+      password_hash: user.password_hash
+    }
   end
 end

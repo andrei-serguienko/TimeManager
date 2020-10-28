@@ -4,6 +4,8 @@ defmodule TimeManagerWeb.UserController do
   alias TimeManager.Store
   alias TimeManager.Store.User
 
+  require Logger
+
   action_fallback TimeManagerWeb.FallbackController
 
   def index(conn, %{"username" => username, "email" => email} = _params) do
@@ -62,4 +64,22 @@ defmodule TimeManagerWeb.UserController do
       send_resp(conn, :created, "")
     end
   end
+
+  def signIn(conn, %{"email" => email, "password_hash" => password_hash}) do
+
+    user = Store.check_user_by_email_and_password!(email, password_hash)
+
+    if(user) do
+      conn
+      |> put_resp_content_type("text/plain")
+      |> send_resp(200, "PASS")
+    else
+      conn
+      |> put_resp_content_type("text/plain")
+      |> send_resp(404, "NOT PASS")
+    end
+  end
+
+  defp blank?(str_or_nil),
+       do: "" == str_or_nil |> to_string() |> String.trim()
 end
