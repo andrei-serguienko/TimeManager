@@ -19,4 +19,4 @@ RUN mix compile
 RUN mix phx.digest
 
 # run phoenix in production on PORT 4000
-CMD mix local.hex --force && mix ecto.reset && mix phx.server
+CMD mix local.hex --force && mix ecto.migrate && mix phx.server
