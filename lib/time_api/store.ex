@@ -37,9 +37,15 @@ defmodule TimeManager.Store do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+
   def get_users_by_username!(username) do
     from(u in User, where: u.username == ^username)
     |> Repo.all()
+  end
+
+  def get_user_by_email_and_password!(email, password) do
+    from(u in User, where: u.email == ^email and u.password_hash==^password)
+    |> Repo.one
   end
 
   def get_users_by_email!(email) do
@@ -50,12 +56,6 @@ defmodule TimeManager.Store do
   def get_users_by_username_and_email!(username, email) do
     from(u in User, where: u.username == ^username and u.email == ^email)
     |> Repo.all()
-  end
-
-  def check_user_by_email_and_password!(email, password_hash) do
-#    from p in Post, where: p.like_count > 10
-    from(u in User, where: u.email == ^email and u.password_hash == ^password_hash)
-    |> Repo.exists?()
   end
 
   @doc """

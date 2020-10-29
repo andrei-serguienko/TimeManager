@@ -18,4 +18,8 @@ defmodule TimeManagerWeb.UserView do
       password_hash: user.password_hash
     }
   end
+
+  def render("token.json", %{token: token}) do
+    %{token: token}
+  end
 end

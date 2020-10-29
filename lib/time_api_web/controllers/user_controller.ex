@@ -67,16 +67,17 @@ defmodule TimeManagerWeb.UserController do
 
   def signIn(conn, %{"email" => email, "password_hash" => password_hash}) do
 
-    user = Store.check_user_by_email_and_password!(email, password_hash)
+    user = Store.get_user_by_email_and_password!(email, password_hash)
+    jwt = JsonWebToken.sign(%{userId: user.id, isAdmin: user.admin}, %{key: "vv6ez3s6YLppRmMolqNxTVOAZ7DcMRRSalpdNnFm5WLA1DF1lKBxXefxSwKFk/nN"})
 
     if(user) do
       conn
-      |> put_resp_content_type("text/plain")
-      |> send_resp(200, "PASS")
+      |> put_status(200)
+      |> render("token.json", token: jwt)
     else
       conn
       |> put_resp_content_type("text/plain")
-      |> send_resp(404, "NOT PASS")
+      |> send_resp(404, "WRONG")
     end
   end
 

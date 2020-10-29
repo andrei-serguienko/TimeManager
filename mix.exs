@@ -44,7 +44,7 @@ defmodule TimeManager.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:joken, "~> 2.0-rc0"}
+      {:json_web_token, "~> 0.2"}
     ]
   end
 
