@@ -25,6 +25,10 @@ defmodule TimeManagerWeb.Router do
     post "/users/sign-in", UserController, :signIn
     options "/users/:id", UserController, :authentication
     options "/users/", UserController, :authentication
+
+    get "/teams", TeamController, :index
+    post "/teams/:userID/:teamID", TeamController, :create
+    post "/teams", TeamController, :create
   end
 
   # Enables LiveDashboard only for development

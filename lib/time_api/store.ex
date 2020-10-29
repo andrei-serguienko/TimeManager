@@ -350,4 +350,39 @@ defmodule TimeManager.Store do
     from(c in WorkingTime, where: c.user_id == ^user_id)
     |> Repo.all()
   end
+
+  alias TimeManager.Store.Team
+
+  def get_team!(id), do: Repo.get!(Team, id)
+
+  def list_teams() do
+    Repo.all(Team) |> preload(:users)
+  end
+
+  def get_team_by_name(name) do
+    from(u in Team, where: u.name == ^name)
+    |> preload(:users)
+    |> Repo.all()
+  end
+
+  def create_team(attrs \\ %{}) do
+    %Team{}
+    |> Team.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def link_team_user(user_id, team_id) do
+    get_team!(team_id)
+    |> Repo.preload(:users)
+    |> Ecto.Changeset.change
+    |> Ecto.Changeset.put_assoc(:users, [get_user!(user_id)])
+    |> Repo.update()
+  end
+
+  def get_teams_link() do
+     Team
+    |> preload(:users)
+    |> Repo.all()
+  end
+
 end

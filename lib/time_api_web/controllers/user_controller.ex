@@ -28,6 +28,15 @@ defmodule TimeManagerWeb.UserController do
     render(conn, "index.json", users: users)
   end
 
+  def create(conn, %{"teamID" => team_id, "user" => user_params}) do
+    with {:ok, %User{} = user} <- Store.create_user_in_team(team_id, user_params) do
+      conn
+      |> put_status(:created)
+      |> put_resp_header("location", Routes.user_path(conn, :show, user))
+      |> render("show.json", user: user)
+    end
+  end
+
   def create(conn, %{"user" => user_params}) do
     with {:ok, %User{} = user} <- Store.create_user(user_params) do
       conn
@@ -38,6 +47,16 @@ defmodule TimeManagerWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
+    token = conn
+            |> get_req_header("token")
+    token = List.first(token)
+    verifyToken = JsonWebToken.verify(token, %{key: "vv6ez3s6YLppRmMolqNxTVOAZ7DcMRRSalpdNnFm5WLA1DF1lKBxXefxSwKFkN"})
+
+    case verifyToken do
+      {:ok, ok} -> Logger.info("VALID") #TODO: INVALID REQUEST
+      {:error, error} -> Logger.info("INVALID") #TODO: VALID REQUEST
+    end
+
     user = Store.get_user!(id)
     render(conn, "show.json", user: user)
   end
@@ -68,7 +87,10 @@ defmodule TimeManagerWeb.UserController do
   def signIn(conn, %{"email" => email, "password_hash" => password_hash}) do
 
     user = Store.get_user_by_email_and_password!(email, password_hash)
-    jwt = JsonWebToken.sign(%{userId: user.id, isAdmin: user.admin}, %{key: "vv6ez3s6YLppRmMolqNxTVOAZ7DcMRRSalpdNnFm5WLA1DF1lKBxXefxSwKFk/nN"})
+    jwt = JsonWebToken.sign(
+      %{userId: user.id, isAdmin: user.admin},
+      %{key: "vv6ez3s6YLppRmMolqNxTVOAZ7DcMRRSalpdNnFm5WLA1DF1lKBxXefxSwKFkN"}
+    )
 
     if(user) do
       conn
@@ -82,5 +104,7 @@ defmodule TimeManagerWeb.UserController do
   end
 
   defp blank?(str_or_nil),
-       do: "" == str_or_nil |> to_string() |> String.trim()
+       do: "" == str_or_nil
+                 |> to_string()
+                 |> String.trim()
 end

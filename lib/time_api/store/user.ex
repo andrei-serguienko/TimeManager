@@ -9,6 +9,12 @@ defmodule TimeManager.Store.User do
     field :password_hash, :string
     has_many :workingtimes, TimeManager.Store.WorkingTime, on_delete: :delete_all
     has_many :clocks, TimeManager.Store.Clock, on_delete: :delete_all
+    many_to_many(
+      :teams,
+      TimeManager.Store.Team,
+      join_through: TimeManager.Store.TeamUser,
+      on_replace: :delete
+    )
 
     timestamps()
   end
