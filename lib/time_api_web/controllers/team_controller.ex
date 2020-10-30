@@ -33,8 +33,21 @@ defmodule TimeManagerWeb.TeamController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = Store.get_team!(id)
-    render(conn, "show.json", user: user)
+    token = conn
+            |> get_req_header("token")
+    token = List.first(token)
+    verifyToken = JsonWebToken.verify(token, %{key: "vv6ez3s6YLppRmMolqNxTVOAZ7DcMRRSalpdNnFm5WLA1DF1lKBxXefxSwKFkN"})
+    case verifyToken do
+      {:ok, ok} -> affich(conn,id)
+      {:error, error} -> conn
+                         |> put_resp_content_type("text/plain")
+                         |> send_resp(404, "WRONG TOKEN")
+    end
   end
+
+  def affich(conn,id) do
+  user = Store.get_team!(id)
+render(conn, "show.json", user: user)
+end
 
 end

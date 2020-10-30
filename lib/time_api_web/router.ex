@@ -4,6 +4,7 @@ defmodule TimeManagerWeb.Router do
   pipeline :api do
     plug CORSPlug, origin: "*"
     plug :accepts, ["json"]
+    plug Corsica, allow_headers: ["authorization"]
 
   end
 

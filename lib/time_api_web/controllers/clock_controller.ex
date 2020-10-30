@@ -19,9 +19,22 @@ defmodule TimeManagerWeb.ClockController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
+  def affich(conn,  id) do
     clock = Store.get_clock!(id)
     render(conn, "show.json", clock: clock)
+  end
+
+  def show(conn, %{"id" => id}) do
+    token = conn
+            |> get_req_header("token")
+    token = List.first(token)
+    verifyToken = JsonWebToken.verify(token, %{key: "vv6ez3s6YLppRmMolqNxTVOAZ7DcMRRSalpdNnFm5WLA1DF1lKBxXefxSwKFkN"})
+    case verifyToken do
+      {:ok, ok} -> affich(conn,id)
+      {:error, error} -> conn
+                         |> put_resp_content_type("text/plain")
+                         |> send_resp(404, "WRONG TOKEN")
+    end
   end
 
   def update(conn, %{"id" => id, "clock" => clock_params}) do

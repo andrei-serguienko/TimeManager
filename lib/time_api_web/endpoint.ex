@@ -25,7 +25,7 @@ defmodule TimeManagerWeb.Endpoint do
     from: :time_api,
     gzip: false,
     only: ~w(css fonts images js favicon.ico robots.txt),
-    headers: %{"Access-Control-Allow-Headers" => "*"}
+    headers: %{"Access-Control-Allow-Origin" => "*"}
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
