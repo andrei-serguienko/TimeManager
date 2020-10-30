@@ -47,15 +47,15 @@ defmodule TimeManagerWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    token = conn
-            |> get_req_header("token")
-    token = List.first(token)
-    verifyToken = JsonWebToken.verify(token, %{key: "vv6ez3s6YLppRmMolqNxTVOAZ7DcMRRSalpdNnFm5WLA1DF1lKBxXefxSwKFkN"})
-
-    case verifyToken do
-      {:ok, ok} -> Logger.info("VALID") #TODO: INVALID REQUEST
-      {:error, error} -> Logger.info("INVALID") #TODO: VALID REQUEST
-    end
+#    token = conn
+#            |> get_req_header("token")
+#    token = List.first(token)
+#    verifyToken = JsonWebToken.verify(token, %{key: "vv6ez3s6YLppRmMolqNxTVOAZ7DcMRRSalpdNnFm5WLA1DF1lKBxXefxSwKFkN"})
+#
+#    case verifyToken do
+#      {:ok, ok} -> Logger.info("VALID") #TODO: INVALID REQUEST
+#      {:error, error} -> Logger.info("INVALID") #TODO: VALID REQUEST
+#    end
 
     user = Store.get_user!(id)
     render(conn, "show.json", user: user)
