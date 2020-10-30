@@ -58,7 +58,6 @@ defmodule TimeManagerWeb.UserController do
                          |> send_resp(404, "WRONG TOKEN")
     end
   end
-            |> get_req_header("authorization")
 
   def affich(conn,id) do
     user = Store.get_user!(id)
