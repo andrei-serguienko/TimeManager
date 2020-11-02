@@ -23,18 +23,14 @@ defmodule TimeManagerWeb.UserController do
     render(conn, "index.json", users: users)
   end
 
-  def index(conn, _params) do
-    users = Store.list_users()
-    render(conn, "index.json", users: users)
+  def single(conn, %{"id" => id}) do
+    users = Store.get_user_id!(id)
+    render(conn, "index_with_working.json", users: users)
   end
 
-  def create(conn, %{"teamID" => team_id, "user" => user_params}) do
-    with {:ok, %User{} = user} <- Store.create_user_in_team(team_id, user_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.user_path(conn, :show, user))
-      |> render("show.json", user: user)
-    end
+  def index(conn, _params) do
+    users = Store.list_users()
+    render(conn, "index_with_working.json", users: users)
   end
 
   def create(conn, %{"user" => user_params}) do
@@ -42,7 +38,7 @@ defmodule TimeManagerWeb.UserController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.user_path(conn, :show, user))
-      |> render("show.json", user: user)
+      |> render("show_without_working.json", user: user)
     end
   end
 
@@ -61,7 +57,7 @@ defmodule TimeManagerWeb.UserController do
 
   def affich(conn,id) do
     user = Store.get_user!(id)
-    render(conn, "show.json", user: user)
+    render(conn, "show_without_working.json", user: user)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do

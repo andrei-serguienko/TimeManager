@@ -17,6 +17,8 @@ defmodule TimeManagerWeb.Router do
     get "/workingtimes/:userID", WorkingTimeController, :index
     get "/workingtimes/:userID/:workingtimeID", WorkingTimeController, :index
     options "/workingtimes/:id", WorkingTimeController, :authentication
+    options "/workingtimes/:id/:workingtimeID", WorkingTimeController, :authentication
+
 
     post "/clocks/:user_id", ClockController, :create
     get "/clocks/:user_id", ClockController, :index
@@ -24,12 +26,22 @@ defmodule TimeManagerWeb.Router do
 
     resources "/users", UserController, except: [:new, :edit]
     post "/users/sign-in", UserController, :signIn
+    get "/user/:id", UserController, :single
     options "/users/:id", UserController, :authentication
     options "/users/", UserController, :authentication
+    options "/users/:userID", UserController, :authentication
 
-    get "/teams", TeamController, :index
+    resources "/teams", TeamController, except: [:new, :edit]
+    delete "/teams/:teamID", TeamController, :delete
+    #get "/teams", TeamController, :index
+    #get "/teams/:userID", TeamController, :index
     post "/teams/:userID/:teamID", TeamController, :create
-    post "/teams", TeamController, :create
+    #post "/teams", TeamController, :create
+    #put "/teams/:teamID", TeamController, :update
+    options "/teams/:userID/:teamID", TeamController, :authentication
+    options "/teams/:teamID", TeamController, :authentication
+    options "/teams", TeamController, :authentication
+
   end
 
   # Enables LiveDashboard only for development
