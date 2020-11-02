@@ -15,9 +15,9 @@ defmodule TimeManagerWeb.TeamController do
     teams = Store.get_teams_link()
     render(conn, "index.json", teams: teams)
   end
-  def delete(conn, %{"teamID" => id}) do
-    team = Store.get_team!(id)
 
+  def delete(conn, %{"id" => id}) do
+    team = Store.get_team!(id)
     with {:ok, %Team{}} <- Store.delete_team(team) do
       send_resp(conn, :no_content, "")
     end
@@ -64,7 +64,7 @@ defmodule TimeManagerWeb.TeamController do
 render(conn, "show.json", user: user)
 end
 
-  def update(conn, %{"teamID" => id, "team" => team_params}) do
+  def update(conn, %{"id" => id, "team" => team_params}) do
     team = Store.get_team!(id)
 
     with {:ok, %Team{} = team} <- Store.update_team(team, team_params) do
