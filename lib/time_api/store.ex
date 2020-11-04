@@ -20,7 +20,14 @@ defmodule TimeManager.Store do
     |> Repo.all()
   end
 
-  def get_user!(id), do: Repo.get!(User, id)
+  def get_user!(id) do
+    User
+    |> Repo.get!(id)
+    |> Repo.preload(:teams)
+    |> Repo.preload(:workingtimes)
+    |> Repo.preload(:clocks)
+
+  end
 
   def get_user_id!(id) do
     from(u in User, where: u.id == ^id)
@@ -165,7 +172,11 @@ defmodule TimeManager.Store do
 
 # TEAMS
 
-  def get_team!(id), do: Repo.get!(Team, id)
+  def get_team!(id) do
+    Team
+    |> Repo.get!(id)
+    |> Repo.preload(:users)
+  end
 
   def list_teams() do
     Repo.all(Team) |> preload(:users)
