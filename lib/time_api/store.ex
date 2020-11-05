@@ -28,6 +28,7 @@ defmodule TimeManager.Store do
     |> preload(:schedules)
     |> preload(:workingtimes)
     |> preload(:clocks)
+  end
 
   def get_user_id!(id) do
     from(u in User, where: u.id == ^id)
