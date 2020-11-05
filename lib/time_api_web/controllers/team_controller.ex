@@ -65,4 +65,11 @@ end
     end
   end
 
+
+  def add_one_user_to_team(conn, %{"userID" => userID, "teamID" => teamID}) do
+    with {:ok, %Team{} = team} <- Store.link_team_user(userID, teamID) do
+      render(conn, "show.json", team: team)
+    end
+  end
+
 end

@@ -40,7 +40,7 @@ defmodule TimeManagerWeb.Router do
     #delete "/teams/:teamID", TeamController, :delete
     #get "/teams", TeamController, :index
     #get "/teams/:userID", TeamController, :index
-    post "/teams/:userID/:teamID", TeamController, :create
+    post "/teams/:userID/:teamID", TeamController, :add_one_user_to_team
     #post "/teams", TeamController, :create
     post "/teams", TeamController, :create
     put "/teams/:teamID", TeamController, :update
