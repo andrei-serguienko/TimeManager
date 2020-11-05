@@ -39,8 +39,8 @@ defmodule TimeManagerWeb.Router do
     resources "/teams", TeamController, except: [:new, :edit]
     #delete "/teams/:teamID", TeamController, :delete
     #get "/teams", TeamController, :index
-    #get "/teams/:userID", TeamController, :index
-    post "/teams/:userID/:teamID", TeamController, :add_one_user_to_team
+    get "/teams/:id", TeamController, :show
+    post "/teams/:userID/:teamID", TeamController, :create
     #post "/teams", TeamController, :create
     post "/teams", TeamController, :create
     put "/teams/:teamID", TeamController, :update

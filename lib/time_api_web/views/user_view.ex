@@ -34,8 +34,6 @@ defmodule TimeManagerWeb.UserView do
       admin: user.admin || false,
       password_hash: user.password_hash,
       schedules: render_many(user.schedules, TimeManagerWeb.ScheduleView, "schedule.json"),
-      workingtimes: render_many(user.workingtimes, TimeManagerWeb.WorkingTimeView, "working_time.json"),
-      clocks: render_many(user.clocks, TimeManagerWeb.ClockView, "clock.json"),
       teams: render_many(user.teams, TimeManagerWeb.TeamView, "team.json")
     }
   end

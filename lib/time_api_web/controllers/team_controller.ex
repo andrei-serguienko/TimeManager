@@ -39,35 +39,26 @@ defmodule TimeManagerWeb.TeamController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    token = conn
-            |> get_req_header("token")
-    token = List.first(token)
-    verifyToken = JsonWebToken.verify(token, %{key: "vv6ez3s6YLppRmMolqNxTVOAZ7DcMRRSalpdNnFm5WLA1DF1lKBxXefxSwKFkN"})
-    case verifyToken do
-      {:ok, ok} -> affich(conn,id)
-      {:error, error} -> conn
-                         |> put_resp_content_type("text/plain")
-                         |> send_resp(404, "WRONG TOKEN")
-    end
-  end
-
-  def affich(conn,id) do
-  user = Store.get_team!(id)
-render(conn, "show.json", user: user)
-end
-
   def update(conn, %{"id" => id, "team" => team_params}) do
-    team = Store.get_team!(id)
-
+    team = Store.get_team_id!(id)
     with {:ok, %Team{} = team} <- Store.update_team(team, team_params) do
       render(conn, "show.json", team: team)
     end
   end
 
+  def show(conn, %{"id" => id}) do
+      affich(conn,id)
+  end
 
-  def add_one_user_to_team(conn, %{"userID" => userID, "teamID" => teamID}) do
-    with {:ok, %Team{} = team} <- Store.link_team_user(userID, teamID) do
+  def affich(conn,id) do
+    team = Store.get_team!(id)
+    render(conn, "show.json", team: team)
+  end
+
+  def update(conn, %{"id" => id, "team" => team_params}) do
+    team = Store.get_team!(id)
+
+    with {:ok, %Team{} = team} <- Store.update_team(team, team_params) do
       render(conn, "show.json", team: team)
     end
   end

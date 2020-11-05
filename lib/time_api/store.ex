@@ -183,6 +183,11 @@ defmodule TimeManager.Store do
     |> Repo.preload(:users)
   end
 
+  def get_team_id!(id) do
+    Team
+    |> Repo.get!(id)
+  end
+
   def list_teams() do
     Repo.all(Team) |> preload(:users)
   end
