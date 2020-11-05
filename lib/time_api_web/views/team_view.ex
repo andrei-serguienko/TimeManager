@@ -18,7 +18,8 @@ defmodule TimeManagerWeb.TeamView do
     %{
       id: team.id,
       name: team.name,
-      users: render_many(team.users, TimeManagerWeb.UserView, "user.json")
+      users: render_many(team.users, TimeManagerWeb.UserView, "user.json"),
+#      manager: render_one(team.manager, TimeManagerWeb.UserView, "user.json")
     }
   end
 

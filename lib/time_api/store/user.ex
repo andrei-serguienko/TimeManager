@@ -9,12 +9,15 @@ defmodule TimeManager.Store.User do
     field :password_hash, :string
     has_many :workingtimes, TimeManager.Store.WorkingTime, on_delete: :delete_all
     has_many :clocks, TimeManager.Store.Clock, on_delete: :delete_all
+    has_many :schedules, TimeManager.Store.Schedule, on_delete: :delete_all
+
     many_to_many(
       :teams,
       TimeManager.Store.Team,
       join_through: TimeManager.Store.TeamUser,
       on_replace: :delete
     )
+    belongs_to :manager , TimeManager.Store.Team
 
     timestamps()
   end
@@ -22,7 +25,7 @@ defmodule TimeManager.Store.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:username, :email, :admin, :password_hash])
+    |> cast(attrs, [:username, :email, :admin, :password_hash, :manager_id])
     |> validate_required([:username, :email, :password_hash])
     |> validate_format(:email, ~r/@/)
     |> unique_constraint(:email)

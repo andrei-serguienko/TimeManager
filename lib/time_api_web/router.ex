@@ -24,6 +24,10 @@ defmodule TimeManagerWeb.Router do
     get "/clocks/:user_id", ClockController, :index
     options "/clocks/:user_id", ClockController, :authentication
 
+    post "/schedules/:userID", ScheduleController, :create
+    get "/schedules/:userID", ScheduleController, :index
+    options "/schedules/:userID", ScheduleController, :authentication
+
     resources "/users", UserController, except: [:new, :edit]
     post "/users/sign-in", UserController, :signIn
     get "/user/:id", UserController, :single
@@ -37,6 +41,7 @@ defmodule TimeManagerWeb.Router do
     #get "/teams/:userID", TeamController, :index
     post "/teams/:userID/:teamID", TeamController, :create
     #post "/teams", TeamController, :create
+    post "/teams/:managerID", TeamController, :create
     put "/teams/:teamID", TeamController, :update
     options "/teams/:userID/:teamID", TeamController, :authentication
     options "/teams/:teamID", TeamController, :authentication

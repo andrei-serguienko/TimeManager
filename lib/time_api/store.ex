@@ -5,7 +5,7 @@ defmodule TimeManager.Store do
 
   import Ecto.Query, warn: false
   alias TimeManager.Repo
-
+  alias TimeManager.Store.Schedule
   alias TimeManager.Store.User
   alias TimeManager.Store.Team
   alias TimeManager.Store.WorkingTime
@@ -14,6 +14,7 @@ defmodule TimeManager.Store do
 # USERS
   def list_users do
     User
+    |> preload(:schedules)
     |> preload(:workingtimes)
     |> preload(:clocks)
     |> preload(:teams)
@@ -23,15 +24,23 @@ defmodule TimeManager.Store do
   def get_user!(id) do
     User
     |> Repo.get!(id)
-    |> Repo.preload(:teams)
-    |> Repo.preload(:workingtimes)
-    |> Repo.preload(:clocks)
+    |> preload(:teams)
+    |> preload(:schedules)
+    |> preload(:workingtimes)
+    |> preload(:clocks)
 
+  def get_user_id!(id) do
+    from(u in User, where: u.id == ^id)
+    |> preload(:workingtimes)
+    |> preload(:clocks)
+    |> preload(:teams)
+    |> Repo.all()
   end
 
   def get_user_id!(id) do
     from(u in User, where: u.id == ^id)
     |> preload(:workingtimes)
+    |> preload(:schedules)
     |> preload(:clocks)
     |> preload(:teams)
     |> Repo.all()
@@ -75,6 +84,11 @@ defmodule TimeManager.Store do
 
   def change_user(%User{} = user, attrs \\ %{}) do
     User.changeset(user, attrs)
+  end
+
+  def get_all_users_by_ids(users_ids) do
+    from(u in User, where: u.id in ^users_ids)
+    |> Repo.all
   end
 
 
@@ -189,16 +203,17 @@ defmodule TimeManager.Store do
     |> preload(:users)
     |> Repo.all()
   end
-  def update_team(%Team{} = team, attrs) do
-    team
-    |> Team.changeset(attrs)
-    |> Repo.update()
-  end
-  def create_team(attrs \\ %{}) do
-    %Team{}
-    |> Team.changeset(attrs)
-    |> Repo.insert()
-  end
+#  def update_team(%Team{} = team, attrs) do
+#    team
+#    |> Team.changeset(attrs)
+#    |> Repo.update()
+#  end
+
+#  def create_team(attrs \\ %{}) do
+#    %Team{}
+#    |> Team.changeset(attrs)
+#    |> Repo.insert()
+#  end
 
   def link_team_user(user_id, team_id) do
     get_team!(team_id)
@@ -209,14 +224,37 @@ defmodule TimeManager.Store do
   end
 
   def get_teams_link() do
-     Team
+    Team
     |> preload(:users)
+#    |> preload(:manager)
     |> Repo.all()
   end
 
   def get_user_in_team(user_id) do
     from(t in Team, where: t.user_id == ^user_id)
     |> Repo.all()
+  end
+
+  def get_all_users_by_ids(users_ids) do
+    from(u in User, where: u.id in ^users_ids)
+    |> Repo.all
+  end
+
+  def update_team(%TimeManager.Store.Team{} = team, attrs) do
+    employee_ids = attrs["employees"]
+    employees = get_all_users_by_ids(employee_ids)
+    team
+    |> Repo.preload(:users)
+    |> Team.changeset_update_users(employees)
+    |> Team.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def create_team(user, attrs \\ %{}) do
+    user
+    |> Ecto.build_assoc(:user)
+    |> Team.changeset(attrs)
+    |> Repo.insert()
   end
 
 end

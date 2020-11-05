@@ -9,31 +9,37 @@ defmodule TimeManagerWeb.UserController do
   action_fallback TimeManagerWeb.FallbackController
 
   def index(conn, %{"username" => username, "email" => email} = _params) do
+    TimeManager.VerifyToken.checkToken(conn)
     users = Store.get_users_by_username_and_email!(username, email)
     render(conn, "index.json", users: users)
   end
 
   def index(conn, %{"email" => email} = _params) do
+    TimeManager.VerifyToken.checkToken(conn)
     users = Store.get_users_by_email!(email)
     render(conn, "index.json", users: users)
   end
 
   def index(conn, %{"username" => username} = _params) do
+    TimeManager.VerifyToken.checkToken(conn)
     users = Store.get_users_by_username!(username)
     render(conn, "index.json", users: users)
   end
 
   def single(conn, %{"id" => id}) do
+    TimeManager.VerifyToken.checkToken(conn)
     users = Store.get_user_id!(id)
     render(conn, "index_with_working.json", users: users)
   end
 
   def index(conn, _params) do
+    TimeManager.VerifyToken.checkToken(conn)
     users = Store.list_users()
     render(conn, "index_with_working.json", users: users)
   end
 
   def create(conn, %{"user" => user_params}) do
+    TimeManager.VerifyToken.checkToken(conn)
     with {:ok, %User{} = user} <- Store.create_user(user_params) do
       conn
       |> put_status(:created)
@@ -43,24 +49,18 @@ defmodule TimeManagerWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    token = conn
-            |> get_req_header("authorization")
-    token = List.first(token)
-    verifyToken = JsonWebToken.verify(token, %{key: "vv6ez3s6YLppRmMolqNxTVOAZ7DcMRRSalpdNnFm5WLA1DF1lKBxXefxSwKFkN"})
-    case verifyToken do
-      {:ok, ok} -> affich(conn,id)
-      {:error, error} -> conn
-                         |> put_resp_content_type("text/plain")
-                         |> send_resp(404, "WRONG TOKEN")
-    end
+    TimeManager.VerifyToken.checkToken(conn)
+    affich(conn,id)
   end
 
   def affich(conn,id) do
+    TimeManager.VerifyToken.checkToken(conn)
     user = Store.get_user!(id)
     render(conn, "show_without_working.json", user: user)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
+    TimeManager.VerifyToken.checkToken(conn)
     user = Store.get_user!(id)
 
     with {:ok, %User{} = user} <- Store.update_user(user, user_params) do
@@ -69,6 +69,7 @@ defmodule TimeManagerWeb.UserController do
   end
 
   def delete(conn, %{"id" => id}) do
+    TimeManager.VerifyToken.checkToken(conn)
     user = Store.get_user!(id)
     with {:ok, %User{}} <- Store.delete_user(user) do
       send_resp(conn, :no_content, "")
@@ -100,9 +101,4 @@ defmodule TimeManagerWeb.UserController do
       |> send_resp(404, "WRONG")
     end
   end
-
-  defp blank?(str_or_nil),
-       do: "" == str_or_nil
-                 |> to_string()
-                 |> String.trim()
 end
