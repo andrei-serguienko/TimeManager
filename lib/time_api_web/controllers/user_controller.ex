@@ -39,7 +39,13 @@ defmodule TimeManagerWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    TimeManager.VerifyToken.checkToken(conn)
+    Enum.map(user_params, fn {k, v} ->
+      if k == "admin" do
+        if v == true do
+          TimeManager.VerifyToken.checkToken(conn)
+        end
+      end
+    end)
     with {:ok, %User{} = user} <- Store.create_user(user_params) do
       conn
       |> put_status(:created)

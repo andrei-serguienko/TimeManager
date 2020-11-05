@@ -30,29 +30,12 @@ defmodule TimeManagerWeb.TeamController do
     end
   end
 
-  def create(conn, %{"managerID" => manager_id, "team" => team_params}) do
-    manager = Store.get_user!(manager_id)
-    with {:ok, %Team{} = team} <- Store.create_team(manager, team_params) do
+  def create(conn, %{"team" => team_params}) do
+    with {:ok, %Team{} = team} <- Store.create_team(team_params) do
       team = Store.get_team!(team.id)
       with {:ok, %Team{} = team} <- Store.update_team(team, team_params) do
         render(conn, "show.json", team: team)
       end
-    end
-  end
-
-  def create(conn, %{"userID" => user_id, "teamID" => team_id}) do
-    with {:ok, %Team{} = team} <- Store.link_team_user(user_id, team_id) do
-      conn
-      |> put_status(:created)
-      |> render("show.json", team: team)
-    end
-  end
-
-  def create(conn, %{"team" => team_params}) do
-    with {:ok, %Team{} = team} <- Store.create_team(team_params) do
-      conn
-      |> put_status(:created)
-      |> render("show_without_users.json", team: team)
     end
   end
 

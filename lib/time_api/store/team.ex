@@ -4,13 +4,13 @@ defmodule TimeManager.Store.Team do
 
   schema "teams" do
     field :name, :string
+    field :manager, :string
     many_to_many(
       :users,
       TimeManager.Store.User,
       join_through: TimeManager.Store.TeamUser,
       on_replace: :delete
     )
-    has_one :manager, TimeManager.Store.User, on_delete: :delete_all
 
     timestamps()
   end
@@ -18,7 +18,7 @@ defmodule TimeManager.Store.Team do
   @doc false
   def changeset(team, attrs) do
     team
-    |> cast(attrs, [:name])
+    |> cast(attrs, [:name, :manager])
     |> validate_required([:name])
     |> unique_constraint(:name)
   end

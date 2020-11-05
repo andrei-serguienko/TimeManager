@@ -17,7 +17,6 @@ defmodule TimeManager.Store.User do
       join_through: TimeManager.Store.TeamUser,
       on_replace: :delete
     )
-    belongs_to :manager , TimeManager.Store.Team
 
     timestamps()
   end
@@ -25,7 +24,7 @@ defmodule TimeManager.Store.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:username, :email, :admin, :password_hash, :manager_id])
+    |> cast(attrs, [:username, :email, :admin, :password_hash])
     |> validate_required([:username, :email, :password_hash])
     |> validate_format(:email, ~r/@/)
     |> unique_constraint(:email)

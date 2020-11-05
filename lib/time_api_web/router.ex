@@ -41,7 +41,7 @@ defmodule TimeManagerWeb.Router do
     #get "/teams/:userID", TeamController, :index
     post "/teams/:userID/:teamID", TeamController, :create
     #post "/teams", TeamController, :create
-    post "/teams/:managerID", TeamController, :create
+    post "/teams", TeamController, :create
     put "/teams/:teamID", TeamController, :update
     options "/teams/:userID/:teamID", TeamController, :authentication
     options "/teams/:teamID", TeamController, :authentication

@@ -4,6 +4,7 @@ defmodule TimeManager.Repo.Migrations.CreateTeams do
   def change do
     create table(:teams) do
       add :name, :string
+      add :manager, :string
 
       timestamps()
     end

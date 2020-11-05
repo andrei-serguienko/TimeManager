@@ -33,14 +33,6 @@ defmodule TimeManager.Store do
   def get_user_id!(id) do
     from(u in User, where: u.id == ^id)
     |> preload(:workingtimes)
-    |> preload(:clocks)
-    |> preload(:teams)
-    |> Repo.all()
-  end
-
-  def get_user_id!(id) do
-    from(u in User, where: u.id == ^id)
-    |> preload(:workingtimes)
     |> preload(:schedules)
     |> preload(:clocks)
     |> preload(:teams)
@@ -210,12 +202,6 @@ defmodule TimeManager.Store do
 #    |> Repo.update()
 #  end
 
-#  def create_team(attrs \\ %{}) do
-#    %Team{}
-#    |> Team.changeset(attrs)
-#    |> Repo.insert()
-#  end
-
   def link_team_user(user_id, team_id) do
     get_team!(team_id)
     |> Repo.preload(:users)
@@ -227,7 +213,6 @@ defmodule TimeManager.Store do
   def get_teams_link() do
     Team
     |> preload(:users)
-#    |> preload(:manager)
     |> Repo.all()
   end
 
@@ -251,9 +236,8 @@ defmodule TimeManager.Store do
     |> Repo.update()
   end
 
-  def create_team(user, attrs \\ %{}) do
-    user
-    |> Ecto.build_assoc(:user)
+  def create_team(attrs \\ %{}) do
+    %Team{}
     |> Team.changeset(attrs)
     |> Repo.insert()
   end
