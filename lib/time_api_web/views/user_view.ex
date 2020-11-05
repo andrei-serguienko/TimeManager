@@ -3,7 +3,7 @@ defmodule TimeManagerWeb.UserView do
   alias TimeManagerWeb.UserView
 
   def render("index.json", %{users: users}) do
-    %{data: render_many(users, UserView, "user_working.json")}
+    %{data: render_many(users, UserView, "user.json")}
   end
 
   def render("index_with_working.json", %{users: users}) do

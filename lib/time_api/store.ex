@@ -24,10 +24,6 @@ defmodule TimeManager.Store do
   def get_user!(id) do
     User
     |> Repo.get!(id)
-    |> preload(:teams)
-    |> preload(:schedules)
-    |> preload(:workingtimes)
-    |> preload(:clocks)
   end
 
   def get_user_id!(id) do
@@ -65,8 +61,8 @@ defmodule TimeManager.Store do
     |> Repo.insert()
   end
 
-  def update_user(%User{} = user, attrs) do
-    user
+  def update_user(id, attrs) do
+    get_user!(id)
     |> User.changeset(attrs)
     |> Repo.update()
   end
@@ -219,11 +215,6 @@ defmodule TimeManager.Store do
   def get_user_in_team(user_id) do
     from(t in Team, where: t.user_id == ^user_id)
     |> Repo.all()
-  end
-
-  def get_all_users_by_ids(users_ids) do
-    from(u in User, where: u.id in ^users_ids)
-    |> Repo.all
   end
 
   def update_team(%TimeManager.Store.Team{} = team, attrs) do

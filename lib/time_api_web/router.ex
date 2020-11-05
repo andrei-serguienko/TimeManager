@@ -27,9 +27,10 @@ defmodule TimeManagerWeb.Router do
     get "/schedules/:userID", ScheduleController, :index
     options "/schedules/:userID", ScheduleController, :authentication
 
+    get "/users/:id", UserController, :nolink
+    get "/user/:id", UserController, :single
     resources "/users", UserController, except: [:new, :edit]
     post "/users/sign-in", UserController, :signIn
-    get "/user/:id", UserController, :single
     options "/users/:id", UserController, :authentication
     options "/users/", UserController, :authentication
     options "/users/:userID", UserController, :authentication

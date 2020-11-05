@@ -8,6 +8,12 @@ defmodule TimeManagerWeb.UserController do
 
   action_fallback TimeManagerWeb.FallbackController
 
+  def nolink(conn, %{"id" => id}) do
+    TimeManager.VerifyToken.checkToken(conn)
+    user = Store.get_user!(id)
+    render(conn, "show_without_working.json", user: user)
+  end
+
   def index(conn, %{"username" => username, "email" => email} = _params) do
     TimeManager.VerifyToken.checkToken(conn)
     users = Store.get_users_by_username_and_email!(username, email)
@@ -26,15 +32,15 @@ defmodule TimeManagerWeb.UserController do
     render(conn, "index.json", users: users)
   end
 
+  def index(conn, _params) do
+    TimeManager.VerifyToken.checkToken(conn)
+    user = Store.list_users()
+    render(conn, "index_with_working.json", users: user)
+  end
+
   def single(conn, %{"id" => id}) do
     TimeManager.VerifyToken.checkToken(conn)
     users = Store.get_user_id!(id)
-    render(conn, "index_with_working.json", users: users)
-  end
-
-  def index(conn, _params) do
-    TimeManager.VerifyToken.checkToken(conn)
-    users = Store.list_users()
     render(conn, "index_with_working.json", users: users)
   end
 
@@ -46,11 +52,15 @@ defmodule TimeManagerWeb.UserController do
         end
       end
     end)
+
     with {:ok, %User{} = user} <- Store.create_user(user_params) do
+      jwt = JsonWebToken.sign(
+        %{userId: user.id, isAdmin: user.admin},
+        %{key: "vv6ez3s6YLppRmMolqNxTVOAZ7DcMRRSalpdNnFm5WLA1DF1lKBxXefxSwKFkN"}
+      )
       conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.user_path(conn, :show, user))
-      |> render("show_without_working.json", user: user)
+      |> put_status(201)
+      |> render("token.json", token: jwt)
     end
   end
 
@@ -67,10 +77,9 @@ defmodule TimeManagerWeb.UserController do
 
   def update(conn, %{"id" => id, "user" => user_params}) do
     TimeManager.VerifyToken.checkToken(conn)
-    user = Store.get_user!(id)
 
-    with {:ok, %User{} = user} <- Store.update_user(user, user_params) do
-      render(conn, "show.json", user: user)
+    with {:ok, %User{} = user} <- Store.update_user(id, user_params) do
+      render(conn, "show_without_working.json", user: user)
     end
   end
 
