@@ -31,6 +31,7 @@ defmodule TimeManagerWeb.Router do
     get "/user/:id", UserController, :single
     resources "/users", UserController, except: [:new, :edit]
     post "/users/sign-in", UserController, :signIn
+    options "/user/:id", UserController, :authentication
     options "/users/:id", UserController, :authentication
     options "/users/", UserController, :authentication
     options "/users/:userID", UserController, :authentication
