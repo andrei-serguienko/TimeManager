@@ -16,6 +16,6 @@ defmodule TimeManager.Store.Schedule do
   def changeset(schedule, attrs) do
     schedule
     |> cast(attrs, [:title,:start, :end, :description, :user_id])
-    |> validate_required([:title,:start, :end])
+    |> validate_required([:title,:start, :end, :user_id])
   end
 end

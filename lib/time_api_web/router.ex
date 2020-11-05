@@ -23,9 +23,9 @@ defmodule TimeManagerWeb.Router do
     get "/clocks/:user_id", ClockController, :index
     options "/clocks/:user_id", ClockController, :authentication
 
-    post "/schedules/:userID", ScheduleController, :create
-    get "/schedules/:userID", ScheduleController, :index
-    options "/schedules/:userID", ScheduleController, :authentication
+    post "/schedules/:user_id", ScheduleController, :create
+    get "/schedules/:user_id", ScheduleController, :index
+    options "/schedules/:user_id", ScheduleController, :authentication
 
     get "/users/:id", UserController, :nolink
     get "/user/:id", UserController, :single

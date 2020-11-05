@@ -58,8 +58,8 @@ defmodule TimeManagerWeb.ScheduleController do
     end
   end
   def authentication(conn, %{"id" => id}) do
-    working_time = Store.get_working_time!(id)
-    if(working_time) do
+    schedule = Store.get_schedule!(id)
+    if(schedule) do
       send_resp(conn, :created, "")
     end
   end

@@ -173,6 +173,8 @@ defmodule TimeManager.Store do
   end
 
 
+
+
 # TEAMS
 
   def get_team!(id) do
@@ -231,6 +233,37 @@ defmodule TimeManager.Store do
     %Team{}
     |> Team.changeset(attrs)
     |> Repo.insert()
+  end
+
+
+  #SCHEDULE
+
+  def get_schedules_by_user_id(user_id) do
+    from(c in Schedule, where: c.user_id == ^user_id)
+    |> Repo.all()
+  end
+  def list_schedules do
+    Repo.all(Schedule)
+  end
+
+  def get_schedule!(id), do: Repo.get!(Schedule, id)
+
+  def create_schedule(user_id, attrs \\ %{}) do
+    user = get_user!(user_id)
+    user
+    |> Ecto.build_assoc(:schedules)
+    |> Schedule.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def update_schedule(%Schedule{} = schedule, attrs) do
+    schedule
+    |> Schedule.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def delete_schedule(%Schedule{} = schedule) do
+    Repo.delete(schedule)
   end
 
 end
