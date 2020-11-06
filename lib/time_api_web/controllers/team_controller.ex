@@ -29,20 +29,11 @@ defmodule TimeManagerWeb.TeamController do
       send_resp(conn, :created, "")
     end
   end
-
   def create(conn, %{"team" => team_params}) do
     with {:ok, %Team{} = team} <- Store.create_team(team_params) do
-      team = Store.get_team!(team.id)
-      with {:ok, %Team{} = team} <- Store.update_team(team, team_params) do
-        render(conn, "show.json", team: team)
-      end
-    end
-  end
-
-  def update(conn, %{"id" => id, "team" => team_params}) do
-    team = Store.get_team_id!(id)
-    with {:ok, %Team{} = team} <- Store.update_team(team, team_params) do
-      render(conn, "show.json", team: team)
+      conn
+      |> put_status(:created)
+      |> render("show.json", team: team)
     end
   end
 

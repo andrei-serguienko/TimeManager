@@ -6,7 +6,7 @@ defmodule TimeManager.Repo.Migrations.CreateSchedules do
       add :title, :string
       add :start, :naive_datetime
       add :end, :naive_datetime
-      add :description, :string
+      add :cssClass, :string
       add :user_id, references(:users, on_delete: :delete_all)
       timestamps()
     end

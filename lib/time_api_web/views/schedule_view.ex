@@ -15,6 +15,7 @@ defmodule TimeManagerWeb.ScheduleView do
       title: schedule.title,
       start: schedule.start,
       end: schedule.end,
-      description: schedule.description}
+      cssClass: schedule.cssClass,
+      }
   end
 end
